@@ -42,6 +42,7 @@ namespace NzbDrone.Core.History
         TrackFileRenamed = 6,
         AlbumImportIncomplete = 7,
         DownloadImported = 8,
-        TrackFileRetagged = 9
+        TrackFileRetagged = 9,
+        DownloadIgnored = 10
     }
 }
