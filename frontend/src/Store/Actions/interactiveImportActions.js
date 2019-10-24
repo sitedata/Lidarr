@@ -29,8 +29,8 @@ export const defaultState = {
   error: null,
   items: [],
   pendingChanges: {},
-  sortKey: 'quality',
-  sortDirection: sortDirections.DESCENDING,
+  sortKey: 'path',
+  sortDirection: sortDirections.ASCENDING,
   recentFolders: [],
   importMode: 'move',
   sortPredicates: {
