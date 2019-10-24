@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NLog;
 using NzbDrone.Common.Cache;
+using NzbDrone.Common.Extensions;
 using NzbDrone.Common.EnsureThat;
 using NzbDrone.Core.MediaFiles;
 using NzbDrone.Core.Profiles.Releases;
@@ -14,9 +15,6 @@ using NzbDrone.Core.Music;
 
 namespace NzbDrone.Core.Organizer
 {
-    // this is here to resolve ambiguity in GetValueOrDefault extension method in net core 3
-    using NzbDrone.Common.Extensions;
-
     public interface IBuildFileNames
     {
         string BuildTrackFileName(List<Track> tracks, Artist artist, Album album, TrackFile trackFile, NamingConfig namingConfig = null, List<string> preferredWords = null);

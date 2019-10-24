@@ -6,6 +6,7 @@ using System.Linq;
 using FluentValidation.Results;
 using NLog;
 using NzbDrone.Common.Disk;
+using NzbDrone.Common.Extensions;
 using NzbDrone.Common.Http;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.Exceptions;
@@ -15,9 +16,6 @@ using NzbDrone.Core.Validation;
 
 namespace NzbDrone.Core.Download.Clients.Nzbget
 {
-    // this is here to resolve ambiguity in GetValueOrDefault extension method in net core 3
-    using NzbDrone.Common.Extensions;
-
     public class Nzbget : UsenetClientBase<NzbgetSettings>
     {
         private readonly INzbgetProxy _proxy;
