@@ -231,7 +231,6 @@ class ArtistIndex extends Component {
               iconName={icons.REFRESH}
               spinningName={icons.REFRESH}
               isSpinning={isRefreshingArtist}
-              isDisabled={hasNoArtist}
               onPress={onRefreshArtistPress}
             />
 
