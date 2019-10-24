@@ -19,7 +19,7 @@ namespace NzbDrone.Core.Music
             SecondaryTypes = new List<SecondaryAlbumType>();
             Ratings = new Ratings();
             Artist = new Artist();
-
+            AddOptions = new AddAlbumOptions();
         }
 
         // These correspond to columns in the Albums table
@@ -46,7 +46,7 @@ namespace NzbDrone.Core.Music
         public DateTime? LastInfoSync { get; set; }
         public DateTime Added { get; set; }
         [MemberwiseEqualityIgnore]
-        public AddArtistOptions AddOptions { get; set; }
+        public AddAlbumOptions AddOptions { get; set; }
 
         // These are dynamically queried from other tables
         [MemberwiseEqualityIgnore]
