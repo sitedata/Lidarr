@@ -322,17 +322,6 @@ namespace NzbDrone.Core.Parser
             return null;
         }
 
-        private static byte[] Compress(byte[] data)
-        {
-            using (var compressedStream = new MemoryStream())
-            using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress))
-            {
-                zipStream.Write(data, 0, data.Length);
-                zipStream.Close();
-                return compressedStream.ToArray();
-            }
-        }
-
         public void Lookup(List<LocalTrack> tracks, double threshold)
         {
             if (!IsSetup())
@@ -369,7 +358,7 @@ namespace NzbDrone.Core.Parser
             }
             
             // they prefer a gzipped body
-            httpRequest.SetContent(Compress(Encoding.UTF8.GetBytes(sb.ToString())));
+            httpRequest.SetContent(Encoding.UTF8.GetBytes(sb.ToString()).Compress());
             httpRequest.Headers.Add("Content-Encoding", "gzip");
             httpRequest.Headers.ContentType = "application/x-www-form-urlencoded";
             httpRequest.SuppressHttpError = true;
