@@ -35,7 +35,7 @@ namespace NzbDrone.Core.Test.Download
                 SkipReDownload = true
             };
 
-            Subject.HandleAsync(failedEvent);
+            Subject.Handle(failedEvent);
 
             Mocker.GetMock<IManageCommandQueue>()
                 .Verify(x => x.Push(It.IsAny<Command>(), It.IsAny<CommandPriority>(), It.IsAny<CommandTrigger>()),
@@ -54,7 +54,7 @@ namespace NzbDrone.Core.Test.Download
                 .Setup(x => x.AutoRedownloadFailed)
                 .Returns(false);
 
-            Subject.HandleAsync(failedEvent);
+            Subject.Handle(failedEvent);
 
             Mocker.GetMock<IManageCommandQueue>()
                 .Verify(x => x.Push(It.IsAny<Command>(), It.IsAny<CommandPriority>(), It.IsAny<CommandTrigger>()),
@@ -69,7 +69,7 @@ namespace NzbDrone.Core.Test.Download
                 AlbumIds = new List<int> { 2 }
             };
 
-            Subject.HandleAsync(failedEvent);
+            Subject.Handle(failedEvent);
 
             Mocker.GetMock<IManageCommandQueue>()
                 .Verify(x => x.Push(It.Is<AlbumSearchCommand>(c => c.AlbumIds.Count == 1 &&
@@ -90,7 +90,7 @@ namespace NzbDrone.Core.Test.Download
                 AlbumIds = new List<int> { 2, 3 }
             };
 
-            Subject.HandleAsync(failedEvent);
+            Subject.Handle(failedEvent);
 
             Mocker.GetMock<IManageCommandQueue>()
                 .Verify(x => x.Push(It.Is<AlbumSearchCommand>(c => c.AlbumIds.Count == 2 &&
@@ -113,7 +113,7 @@ namespace NzbDrone.Core.Test.Download
                 AlbumIds = new List<int> { 1, 2, 3 }
             };
 
-            Subject.HandleAsync(failedEvent);
+            Subject.Handle(failedEvent);
 
             Mocker.GetMock<IManageCommandQueue>()
                 .Verify(x => x.Push(It.Is<ArtistSearchCommand>(c => c.ArtistId == failedEvent.ArtistId),

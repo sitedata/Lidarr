@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NLog;
+using NzbDrone.Core.Download.TrackedDownloads;
 using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Parser.Model;
 using NzbDrone.Core.Profiles.Releases;
@@ -44,7 +45,18 @@ namespace NzbDrone.Core.DecisionEngine.Specifications
                 var remoteAlbum = queueItem.RemoteAlbum;
                 var qualityProfile = subject.Artist.QualityProfile.Value;
 
+                // If the item has already failed ignore it, it'll be cleaned up automatically later.
+                // To avoid a race make it's it's not FailedPending (failed awaiting removal/search)
+                // or Failed (removed/searching) though the latter should be removed automatically.
+
+                if (queueItem.TrackedDownloadState == TrackedDownloadState.DownloadFailedPending ||
+                    queueItem.TrackedDownloadState == TrackedDownloadState.DownloadFailed)
+                {
+                    continue;
+                }
+
                 _logger.Debug("Checking if existing release in queue meets cutoff. Queued quality is: {0}", remoteAlbum.ParsedAlbumInfo.Quality);
+
                 var queuedItemPreferredWordScore = _preferredWordServiceCalculator.Calculate(subject.Artist, queueItem.Title);
 
                 if (!_upgradableSpecification.CutoffNotMet(qualityProfile,

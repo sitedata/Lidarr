@@ -3,9 +3,6 @@ using NUnit.Framework;
 using NzbDrone.Core.Download;
 using NzbDrone.Core.Messaging.Commands;
 using NzbDrone.Core.Test.Framework;
-using Moq;
-using System.Collections.Generic;
-using System.Linq;
 using FizzWare.NBuilder;
 using NzbDrone.Core.ImportLists;
 using NzbDrone.Core.Update.Commands;
@@ -20,8 +17,8 @@ namespace NzbDrone.Core.Test.Messaging.Commands
         {
             var commandModel = Builder<CommandModel>
                 .CreateNew()
-                .With(c => c.Name = "CheckForFinishedDownload")
-                .With(c => c.Body = new CheckForFinishedDownloadCommand())
+                .With(c => c.Name = "ProcessMonitoredDownloads")
+                .With(c => c.Body = new ProcessMonitoredDownloadsCommand())
                 .With(c => c.Status = CommandStatus.Started)
                 .Build();
 
@@ -59,8 +56,8 @@ namespace NzbDrone.Core.Test.Messaging.Commands
 
             var newCommandModel = Builder<CommandModel>
                 .CreateNew()
-                .With(c => c.Name = "CheckForFinishedDownload")
-                .With(c => c.Body = new CheckForFinishedDownloadCommand())
+                .With(c => c.Name = "ProcessMonitoredDownloads")
+                .With(c => c.Body = new ProcessMonitoredDownloadsCommand())
                 .Build();
 
             Subject.Add(newCommandModel);
