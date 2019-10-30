@@ -109,6 +109,7 @@ class AlbumDetailsConnector extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log();
     if (!_.isEqual(getMonitoredReleases(prevProps), getMonitoredReleases(this.props)) ||
         (prevProps.anyReleaseOk === false && this.props.anyReleaseOk === true)) {
       this.unpopulate();
