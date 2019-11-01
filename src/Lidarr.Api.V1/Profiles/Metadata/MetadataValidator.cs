@@ -32,7 +32,7 @@ namespace Lidarr.Api.V1.Profiles.Metadata
     public class PrimaryTypeValidator<T> : PropertyValidator
     {
         public PrimaryTypeValidator()
-            : base("Must be a valid list")
+            : base("Must have at least one allowed primary type")
         {
         }
 
@@ -45,6 +45,11 @@ namespace Lidarr.Api.V1.Profiles.Metadata
                 return false;
             }
 
+            if (!list.Any(c => c.Allowed))
+            {
+                return false;
+            }
+
             return true;
         }
     }
@@ -52,7 +57,7 @@ namespace Lidarr.Api.V1.Profiles.Metadata
     public class SecondaryTypeValidator<T> : PropertyValidator
     {
         public SecondaryTypeValidator()
-            : base("Must be a valid list")
+            : base("Must have at least one allowed secondary type")
         {
         }
 
@@ -65,6 +70,11 @@ namespace Lidarr.Api.V1.Profiles.Metadata
                 return false;
             }
 
+            if (!list.Any(c => c.Allowed))
+            {
+                return false;
+            }
+
             return true;
         }
     }
@@ -72,7 +82,7 @@ namespace Lidarr.Api.V1.Profiles.Metadata
     public class ReleaseStatusValidator<T> : PropertyValidator
     {
         public ReleaseStatusValidator()
-            : base("Must be a valid list")
+            : base("Must have at least one allowed release status")
         {
         }
 
@@ -81,6 +91,11 @@ namespace Lidarr.Api.V1.Profiles.Metadata
             var list = context.PropertyValue as IList<ProfileReleaseStatusItemResource>;
 
             if (list == null)
+            {
+                return false;
+            }
+
+            if (!list.Any(c => c.Allowed))
             {
                 return false;
             }
