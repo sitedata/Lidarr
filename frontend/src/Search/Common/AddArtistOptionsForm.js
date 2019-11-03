@@ -8,6 +8,7 @@ import FormInputGroup from 'Components/Form/FormInputGroup';
 import Icon from 'Components/Icon';
 import Popover from 'Components/Tooltip/Popover';
 import ArtistMonitoringOptionsPopoverContent from 'AddArtist/ArtistMonitoringOptionsPopoverContent';
+import ArtistMetadataProfilePopoverContent from 'AddArtist/ArtistMetadataProfilePopoverContent';
 import styles from './AddArtistOptionsForm.css';
 
 class AddArtistOptionsForm extends Component {
@@ -32,6 +33,7 @@ class AddArtistOptionsForm extends Component {
       monitor,
       qualityProfileId,
       metadataProfileId,
+      includeNoneMetadataProfile,
       showMetadataProfile,
       albumFolder,
       tags,
@@ -89,11 +91,29 @@ class AddArtistOptionsForm extends Component {
         </FormGroup>
 
         <FormGroup className={showMetadataProfile ? undefined : styles.hideMetadataProfile}>
-          <FormLabel>Metadata Profile</FormLabel>
+          <FormLabel>
+            Metadata Profile
+
+            {
+              includeNoneMetadataProfile &&
+                <Popover
+                  anchor={
+                    <Icon
+                      className={styles.labelIcon}
+                      name={icons.INFO}
+                    />
+                  }
+                  title="Metadata Profile"
+                  body={<ArtistMetadataProfilePopoverContent />}
+                  position={tooltipPositions.RIGHT}
+                />
+            }
+          </FormLabel>
 
           <FormInputGroup
             type={inputTypes.METADATA_PROFILE_SELECT}
             name="metadataProfileId"
+            includeNone={includeNoneMetadataProfile}
             onChange={this.onMetadataProfileIdChange}
             {...metadataProfileId}
           />
@@ -131,6 +151,7 @@ AddArtistOptionsForm.propTypes = {
   qualityProfileId: PropTypes.object,
   metadataProfileId: PropTypes.object,
   showMetadataProfile: PropTypes.bool.isRequired,
+  includeNoneMetadataProfile: PropTypes.bool.isRequired,
   albumFolder: PropTypes.object.isRequired,
   tags: PropTypes.object.isRequired,
   onInputChange: PropTypes.func.isRequired

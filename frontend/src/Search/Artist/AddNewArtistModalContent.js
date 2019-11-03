@@ -93,7 +93,10 @@ class AddNewArtistModalContent extends Component {
                   null
               }
 
-              <AddArtistOptionsForm {...otherProps} />
+              <AddArtistOptionsForm
+                includeNoneMetadataProfile={false}
+                {...otherProps}
+              />
 
             </div>
           </div>

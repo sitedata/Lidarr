@@ -22,7 +22,7 @@ class DeleteAlbumModalContent extends Component {
 
     this.state = {
       deleteFiles: false,
-      addImportListExclusion: false
+      addImportListExclusion: true
     };
   }
 
@@ -102,6 +102,13 @@ class DeleteAlbumModalContent extends Component {
               onChange={this.onAddImportListExclusionChange}
             />
           </FormGroup>
+
+          {
+            !addImportListExclusion &&
+              <div className={styles.deleteFilesMessage}>
+                <div>If you don't add an import list exclusion and the artist has a metadata profile other than 'None' then this album may be re-added during the next artist refresh.</div>
+              </div>
+          }
 
           {
             deleteFiles &&

@@ -269,11 +269,13 @@ namespace NzbDrone.Core.Music
                           entity, sortedChildren.UpToDate.Count, typeof(Child).Name.ToLower(), 
                           sortedChildren.Added.Count, sortedChildren.Updated.Count, sortedChildren.Merged.Count, sortedChildren.Deleted.Count);
 
+            var updated = sortedChildren.Added.Any() || sortedChildren.Updated.Any() || sortedChildren.Merged.Any() || sortedChildren.Deleted.Any();
+
             // Add in the new children (we have checked that foreign IDs don't clash)
             AddChildren(sortedChildren.Added);
 
             // now trigger updates
-            var updated = RefreshChildren(sortedChildren, remoteChildren, forceChildRefresh, forceUpdateFileTags);
+            updated |= RefreshChildren(sortedChildren, remoteChildren, forceChildRefresh, forceUpdateFileTags);
             
             PublishChildrenUpdatedEvent(entity, sortedChildren.Added, sortedChildren.Updated);
             return updated;

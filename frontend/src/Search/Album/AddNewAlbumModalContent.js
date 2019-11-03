@@ -233,6 +233,7 @@ class AddNewAlbumModalContent extends Component {
                 !isExistingArtist &&
                   <AddArtistOptionsForm
                     artistName={artistName}
+                    includeNoneMetadataProfile={true}
                     {...otherProps}
                   />
               }

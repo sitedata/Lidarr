@@ -28,7 +28,7 @@ function createMapStateToProps() {
       return {
         isAdding,
         addError,
-        showMetadataProfile: metadataProfiles.items.length > 1,
+        showMetadataProfile: metadataProfiles.items.length > 2, // NONE (not allowed for artists) and one other
         isSmallScreen: dimensions.isSmallScreen,
         validationErrors,
         validationWarnings,

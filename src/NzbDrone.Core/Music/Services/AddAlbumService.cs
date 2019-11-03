@@ -58,7 +58,9 @@ namespace NzbDrone.Core.Music
             if (dbArtist == null)
             {
                 var artist = album.Artist.Value;
+
                 artist.Metadata.Value.ForeignArtistId = album.ArtistMetadata.Value.ForeignArtistId;
+
                 dbArtist = _addArtistService.AddArtist(artist, false);
             }
 

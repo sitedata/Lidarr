@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { metadataProfileNames } from 'Helpers/Props';
 import { setAddDefault, addAlbum } from 'Store/Actions/searchActions';
 import createDimensionsSelector from 'Store/Selectors/createDimensionsSelector';
 import selectSettings from 'Store/Selectors/selectSettings';
@@ -26,13 +27,17 @@ function createMapStateToProps() {
         validationWarnings
       } = selectSettings(defaults, {}, addError);
 
+      // For adding single albums, default to None profile
+      const noneProfile = metadataProfiles.items.find((item) => item.name === metadataProfileNames.NONE);
+
       return {
         isAdding,
         addError,
-        showMetadataProfile: !isExistingArtist && metadataProfiles.items.length > 1,
+        showMetadataProfile: true,
         isSmallScreen: dimensions.isSmallScreen,
         validationErrors,
         validationWarnings,
+        noneMetadataProfileId: noneProfile.id,
         ...settings
       };
     }
@@ -45,6 +50,28 @@ const mapDispatchToProps = {
 };
 
 class AddNewAlbumModalContentConnector extends Component {
+
+  //
+  // Lifecycle
+
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      metadataProfileIdDefault: props.metadataProfileId.value
+    };
+
+    // select none as default
+    this.onInputChange({
+      name: 'metadataProfileId',
+      value: props.noneMetadataProfileId
+    });
+  }
+
+  componentWillUnmount() {
+    // reinstate standard default
+    this.props.setAddDefault({ metadataProfileId: this.state.metadataProfileIdDefault });
+  }
 
   //
   // Listeners
@@ -97,6 +124,7 @@ AddNewAlbumModalContentConnector.propTypes = {
   monitor: PropTypes.object.isRequired,
   qualityProfileId: PropTypes.object,
   metadataProfileId: PropTypes.object,
+  noneMetadataProfileId: PropTypes.number.isRequired,
   albumFolder: PropTypes.object.isRequired,
   tags: PropTypes.object.isRequired,
   onModalClose: PropTypes.func.isRequired,
